@@ -1,0 +1,31 @@
+[target.x86_64-pc-windows-gnu]
+linker = "C:\\msys64\\mingw64\\bin\\gcc.exe"
+ar = "C:\\msys64\\mingw64\\bin\\ar.exe"
+
+[build]
+rustflags = [
+  "-C", "link-args=-LC:\\msys64\\mingw64\\lib",
+  # Rust 1.94 专属优化标志
+  "-C", "target-cpu=native",
+  "-C", "llvm-args=-march=native",
+]
+
+# 开发环境专属标志
+[target.'cfg(debug_assertions)']
+rustflags = [
+  "-C", "link-args=-LC:\\msys64\\mingw64\\lib",
+  "-C", "target-cpu=native",
+  # 启用更多调试信息
+  "-C", "force-frame-pointers=yes",
+]
+
+# 生产环境专属标志
+[target.'cfg(not(debug_assertions))']
+rustflags = [
+  "-C", "link-args=-LC:\\msys64\\mingw64\\lib",
+  "-C", "target-cpu=native",
+  "-C", "llvm-args=-march=native",
+  # 激进优化
+  "-C", "codegen-units=1",
+  "-C", "lto=fat",
+]

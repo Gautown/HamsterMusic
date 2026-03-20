@@ -1,0 +1,56 @@
+[package]
+name = "zensound"
+version = "0.1.0"
+description = "蝉声音乐 "
+authors = ["ZenSound Team"]
+edition = "2024"
+build = "src-tauri/build.rs"
+rust-version = "1.94"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["tray-icon"] }
+tauri-plugin-fs = "2"
+tauri-plugin-dialog = "2"
+tauri-plugin-http = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+uuid = { version = "1", features = ["v4"] }
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]
+
+[lib]
+name = "zensound_lib"
+path = "src-tauri/src/lib.rs"
+
+[[bin]]
+name = "zensound"
+path = "src-tauri/src/main.rs"
+
+[profile.dev]
+opt-level = 1
+debug = true
+debug-assertions = true
+overflow-checks = true
+lto = false
+panic = 'unwind'
+incremental = true
+codegen-units = 256
+
+[profile.dev.build-override]
+opt-level = 3
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+panic = 'abort'
+strip = true
+incremental = false
+
+[profile.release.build-override]
+opt-level = 3

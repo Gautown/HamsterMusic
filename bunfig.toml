@@ -1,0 +1,6 @@
+[install]
+# 使用硬链接节省磁盘空间
+auto-install-peers = true
+
+# 精确安装版本
+exact = true
