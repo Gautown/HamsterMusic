@@ -1,4 +1,4 @@
-# 蝉音 ZenSound 🎵
+# 仓鼠音乐 HamsterMusic 🎵
 
 一个基于 Tauri 2.0 的本地和在线音乐播放器应用
 
